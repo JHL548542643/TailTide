@@ -1,0 +1,11 @@
+{
+  "app": {
+    "bundleName": "com.tailtide.app",
+    "vendor": "TailTide",
+    "versionCode": 1000003,
+    "versionName": "1.1.2",
+    "buildVersion": "4",
+    "icon": "$media:layered_image",
+    "label": "$string:app_name"
+  }
+}

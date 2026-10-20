@@ -1,0 +1,22 @@
+# local secrets and node configs
+/.cache/
+
+# local toolchain / dependency sources (see docs/BUILD.md)
+/third_party/
+/tools/downloads/
+
+# probe build artifacts
+/tools/p2-probe/probe.so
+/tools/p2-probe/probe.h
+
+# engine build artifacts
+/engine/dist/
+
+# app native prebuilts and build outputs
+/app/entry/libs/**/*.so
+/app/entry/build/
+/app/build/
+/app/.hvigor/
+/app/oh_modules/
+*.hap
+*.log

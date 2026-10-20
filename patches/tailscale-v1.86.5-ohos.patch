@@ -1,0 +1,48 @@
+diff --git a/tsnet/tsnet.go b/tsnet/tsnet.go
+index 65367f2..00f6150 100644
+--- a/tsnet/tsnet.go
++++ b/tsnet/tsnet.go
+@@ -26,6 +26,7 @@
+ 	"sync"
+ 	"time"
+ 
++	"github.com/tailscale/wireguard-go/tun"
+ 	"tailscale.com/client/local"
+ 	"tailscale.com/client/tailscale"
+ 	"tailscale.com/control/controlclient"
+@@ -124,6 +125,12 @@ type Server struct {
+ 	// field at zero unless you know what you are doing.
+ 	Port uint16
+ 
++	// Tun optionally specifies the TUN device backing the engine.
++	// If nil, the engine uses its internal fake TUN (upstream behavior).
++	// The caller owns the device lifecycle.
++	// [harmony-tailnet patch: not present in upstream v1.86.5]
++	Tun tun.Device
++
+ 	getCertForTesting func(*tls.ClientHelloInfo) (*tls.Certificate, error)
+ 
+ 	initOnce         sync.Once
+@@ -579,6 +586,7 @@ func (s *Server) start() (reterr error) {
+ 		ControlKnobs:  sys.ControlKnobs(),
+ 		HealthTracker: sys.HealthTracker(),
+ 		Metrics:       sys.UserMetricsRegistry(),
++		Tun:           s.Tun, // [harmony-tailnet patch]
+ 	})
+ 	if err != nil {
+ 		return err
+@@ -596,6 +604,14 @@ func (s *Server) start() (reterr error) {
+ 	sys.Set(ns)
+ 	ns.ProcessLocalIPs = true
+ 	ns.ProcessSubnets = true
++	if s.Tun != nil {
++		// [harmony-tailnet patch] With a real TUN, inbound packets addressed to this
++		// node (and to subnet routes) must be written to the TUN so the OS kernel and
++		// its sockets receive them. Otherwise netstack intercepts them and the host
++		// application can never complete a TCP/UDP flow.
++		ns.ProcessLocalIPs = false
++		ns.ProcessSubnets = false
++	}
+ 	ns.GetTCPHandlerForFlow = s.getTCPHandlerForFlow
+ 	ns.GetUDPHandlerForFlow = s.getUDPHandlerForFlow
+ 	s.netstack = ns

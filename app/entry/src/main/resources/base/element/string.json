@@ -1,0 +1,24 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "TailTide · Tailnet 随身连接"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "TailTide，Tailnet 随身连接"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "TailTide"
+    },
+    {
+      "name": "grant_internet",
+      "value": "用于建立并维持虚拟专用网络连接"
+    },
+    {
+      "name": "grant_network_info",
+      "value": "用于检测当前网络状态以显示连接提示"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+export const startEngine:(stateDir:string, hostname:string, proxyUrl:string, tunFd:number)=>string;
+export const stopEngine:()=>string;
+export const stopEngineQuiet:()=>string;
+export const stopEngineQuietAsync:()=>Promise<string>;
+export const kickRestart:(stateDir:string, hostname:string, proxyUrl:string)=>string;
+export const kickRestartAsync:(stateDir:string, hostname:string, proxyUrl:string)=>Promise<string>;
+export const engineVersion:()=>string;
+export const getStatus:()=>string;
+export const listSsNodes:(yamlPath:string)=>string;
+export const selectSsNode:(yamlPath:string,name:string)=>string;

@@ -1,0 +1,6 @@
+{
+  "name": "libtailnet_bridge.so",
+  "types": "./Index.d.ts",
+  "version": "1.0.0",
+  "description": "Tailnet engine bridge between ArkTS and libtailscale_go.so"
+}

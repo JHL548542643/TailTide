@@ -1,21 +1,21 @@
-# Privacy
+# 隐私
 
-## No telemetry
+## 无遥测
 
-TailTide does not collect analytics, telemetry, advertising identifiers, or crash reports. There is no account system in the app.
+TailTide 不收集分析、遥测、广告标识或崩溃报告，App 内没有账号系统。
 
-## Local data
+## 本地数据
 
-- SS node configuration (including the node password) is stored in the app's private sandbox: `filesDir/tailnet/clash-config.yaml` and `filesDir/tailnet/ss-node.json`.
-- Logs are local; passwords are not logged.
-- Removing the app removes its sandbox data.
+- SS 节点配置（含节点密码）保存在应用私有沙箱：`filesDir/tailnet/clash-config.yaml`、`filesDir/tailnet/ss-node.json`。
+- 日志仅本地，不记录密码。
+- 卸载 App 会删除沙箱数据。
 
-## Network traffic
+## 网络流量
 
-- Tailnet traffic is handled by the Tailscale engine (WireGuard/DERP) using the user's own Tailscale account.
-- When the built-in SS egress is enabled, connections to the Tailscale control plane/DERP are relayed through the user's chosen Shadowsocks server. That server and its operator can observe connection metadata; choose a provider you trust.
-- The app does not route general phone traffic through the SS server; only the Tailscale engine uses the local front proxy.
+- Tailnet 流量由 Tailscale 引擎（WireGuard/DERP）处理，使用使用者自己的 Tailscale 账号。
+- 启用内置 SS 出口时，Tailscale 控制面/DERP 的连接会经使用者选择的 Shadowsocks 服务器中转。该服务器及其运营者可能看到连接元数据，请选择可信服务商。
+- App **不会**把手机全局流量交给 SS 服务器；只有 Tailscale 引擎使用本地前置代理。
 
-## Third parties
+## 第三方
 
-Tailscale, the Shadowsocks provider, and the HarmonyOS platform have their own privacy policies. This project is not affiliated with them.
+Tailscale、Shadowsocks 服务商、HarmonyOS 平台各有自己的隐私政策。本项目与它们无关联。

@@ -1,48 +1,48 @@
 # TailTide
 
-A private Tailscale client for HarmonyOS, with an optional built-in Shadowsocks egress for the Tailscale control plane / DERP.
+面向 HarmonyOS 的私有 Tailscale 客户端，可选内置 Shadowsocks 出口（仅用于 Tailscale 控制面 / DERP）。
 
-> **Not affiliated with Tailscale Inc.** "Tailscale" is used only to describe interoperability.
+> **与 Tailscale Inc. 无关联**。"Tailscale" 仅用于说明互操作性。
 >
-> **Not affiliated with JJ Lin.** The purple palette is only inspired by the fan support color "紫海"; no endorsement is implied.
+> **与林俊杰无关联**。紫色仅灵感自应援色“紫海”，不代表任何官方背书。
 
-![TailTide icon](docs/assets/icon.png)
+![TailTide 图标](docs/assets/icon.png)
 
-## Features
+## 功能
 
-- HarmonyOS 5/6/7 (API 24+), ArkTS UI + VpnExtensionAbility + Go/tsnet engine.
-- Explicit Tailscale TUN route `100.64.0.0/10` (no global proxy, normal traffic unaffected).
-- Built-in minimal classic Shadowsocks AEAD client (aes-128/256-gcm, no plugin).
-- Import Clash YAML, choose a primary node, automatic fallback to the remaining candidates.
-- Stable local front proxy `127.0.0.1:7899`; upstream can be direct, an external HTTP(S) proxy, or SS.
-- Connection state from the engine heartbeat; no false "connected" state after install/restart.
-- Light/dark theme, status card, egress card, advanced settings, IP copy, toast/dialog feedback.
-- No telemetry.
+- HarmonyOS 5/6/7（API 24+），ArkTS UI + VpnExtensionAbility + Go/tsnet 引擎。
+- 仅声明 Tailscale TUN 路由 `100.64.0.0/10`，不做全局代理，手机其他流量不受影响。
+- 内置轻量经典 Shadowsocks AEAD 客户端（aes-128/256-gcm，无插件）。
+- 支持导入 Clash YAML，选择主节点，连接/握手失败时自动切换候选节点。
+- 固定本地前置代理 `127.0.0.1:7899`；上游支持直连、外部 HTTP(S) 代理、SS。
+- 连接状态来自引擎心跳，安装/重启后不会误报“已连接”。
+- 浅色/深色主题、状态卡片、出口卡片、高级设置、复制 IP、Toast/对话框反馈。
+- 无遥测。
 
-## Architecture
+## 架构
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。
 
-## Build
+## 构建
 
-See [docs/BUILD.md](docs/BUILD.md). `third_party/` is **not** vendored in this repo; follow the build doc to prepare the Go toolchain, Tailscale source and patches.
+见 [docs/BUILD.md](docs/BUILD.md)。`third_party/` **不随仓库提供**，需按构建文档准备 Go 工具链、Tailscale 源码与补丁。
 
-## Privacy
+## 隐私
 
-No telemetry, no analytics. SS node configuration is stored in the app sandbox. See [PRIVACY.md](PRIVACY.md).
+无遥测、无统计。SS 节点配置保存在应用沙箱。见 [PRIVACY.md](PRIVACY.md)。
 
-## Security
+## 安全
 
-See [SECURITY.md](SECURITY.md). Never commit `.cache/`, `clash-config.yaml` or `ss-node.json`.
+见 [SECURITY.md](SECURITY.md)。切勿提交 `.cache/`、`clash-config.yaml`、`ss-node.json`。
 
-## License
+## 许可证
 
-MIT. See [LICENSE](LICENSE).
+MIT，见 [LICENSE](LICENSE)。
 
-## Third-party
+## 第三方
 
-See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
-## Disclaimer
+## 免责声明
 
-This is a personal project, provided "as is", without warranty. You are responsible for complying with Tailscale's terms and your Shadowsocks provider's terms. The built-in SS client is only used for the Tailscale control plane/DERP, not as a global proxy.
+本项目为个人项目，按“现状”提供，不提供任何担保。使用者需自行遵守 Tailscale 服务条款及 Shadowsocks 服务商条款。内置 SS 客户端仅用于 Tailscale 控制面/DERP，不作为全局代理。

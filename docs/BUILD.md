@@ -1,45 +1,45 @@
-# Build
+# 构建
 
-This repository does **not** vendor `third_party/`. The engine needs the OpenHarmony Go toolchain plus a patched Tailscale source tree.
+本仓库**不**内置 `third_party/`。引擎需要 OpenHarmony Go 工具链和打好补丁的 Tailscale 源码。
 
-## Prerequisites
+## 前置条件
 
-- DevEco Studio with HarmonyOS SDK (API 24 compatible; tested on API 26 device).
-- Windows PowerShell.
-- OpenHarmony Go toolchain (Go 1.24.x cross build) at `third_party/ohos-go`.
-- Tailscale v1.86.5 source at `third_party/tailscale`, with `patches/tailscale-v1.86.5-ohos.patch` applied.
-- The Tailscale dependencies (wireguard-go, gVisor, go-yaml) available through the Go module cache.
+- 安装 DevEco Studio 与 HarmonyOS SDK（兼容 API 24；在 API 26 设备上测试）。
+- Windows PowerShell。
+- OpenHarmony Go 工具链（Go 1.24.x 交叉构建）位于 `third_party/ohos-go`。
+- Tailscale v1.86.5 源码位于 `third_party/tailscale`，并应用 `patches/tailscale-v1.86.5-ohos.patch`。
+- Tailscale 依赖（wireguard-go、gVisor、go-yaml）可通过 Go module cache 获取。
 
-## Engine
+## 引擎
 
 ```powershell
 .\tools\build-engine.ps1
 ```
 
-This cross-compiles `engine/` to `app/entry/libs/arm64-v8a/libtailscale_go.so` and copies the generated header.
+交叉编译 `engine/` 到 `app/entry/libs/arm64-v8a/libtailscale_go.so`，并复制生成的头文件。
 
 ## HAP
 
 ```powershell
 .\tools\build-hap.ps1
-# optional: install to a connected device
+# 可选：安装到已连接设备
 .\tools\build-hap.ps1 -Install -Device <device-serial>
 ```
 
-The public package id is `com.tailtide.app`. Configure your own signing profile in DevEco Studio; signing material is not included.
+公开包名为 `com.tailtide.app`。请在 DevEco Studio 配置自己的签名；仓库不包含签名材料。
 
-## Signing (required for a signed HAP)
+## 签名（生成可安装 HAP 必需）
 
-`app/build-profile.json5` is gitignored to keep signing material out of git. A fresh checkout only has `app/build-profile.example.json5`.
+`app/build-profile.json5` 已被 gitignore，以避免签名材料入库。全新 checkout 只有 `app/build-profile.example.json5`。
 
 ```powershell
 Copy-Item app/build-profile.example.json5 app/build-profile.json5
 ```
 
-Then in DevEco Studio: **File > Project Structure > Signing Configs**, create/select a profile for `com.tailtide.app`, and **Build > Build Hap(s)**. Without a matching signing profile the build stops at `SignHap`; an unsigned HAP may still be produced but cannot be installed.
+然后在 DevEco Studio 中打开 **File > Project Structure > Signing Configs**，为 `com.tailtide.app` 创建/选择签名 Profile，再 **Build > Build Hap(s)**。没有匹配的签名时构建会停在 `SignHap`；可能仍产出未签名 HAP，但不能安装。
 
-## Runtime notes
+## 运行时说明
 
-- Android/ANCO Clash running in a container is isolated from the HarmonyOS host; the app uses its own SS client instead.
-- The app stores node configuration in its private sandbox. Do not commit `.cache/`.
-- `.cache/`, `third_party/`, `engine/dist/` and prebuilt `.so` files are gitignored.
+- Android/ANCO Clash 运行在容器中，与 HarmonyOS 宿主隔离；App 使用自己的 SS 客户端，不依赖容器。
+- App 将节点配置保存在私有沙箱，请勿提交 `.cache/`。
+- `.cache/`、`third_party/`、`engine/dist/` 及预编译 `.so` 均已 gitignore。
